@@ -1,6 +1,8 @@
 package csc312.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -27,17 +29,38 @@ public class NewContest extends HttpServlet {
     	//the browser will react based on the status code such as: to display the content, redirect to the alternate url, display an error page
     	resp.setStatus( HttpServletResponse.SC_OK);
 
-    	//parameter on the URL https://wordfinder-001.appspot.com/wordfinder?game=1&pos=b5
-    	//returns the value of a parameter on the url
-    	String str = req.getParameter("game");		//returns parameter held in variable game
-
-    	//
+    	
+    	
+    	
+    	Random rand=new Random();
+    	int contestId=0;
+    	String strContestId="";
+    	ArrayList<Integer> usedContestIds = new ArrayList<Integer>();
+    	
+    	usedContestIds.add(contestId);
+    	
+    	while(usedContestIds.contains(contestId))
+    	{
+    		
+        	contestId=rand.nextInt(1000)+1;	//generate a new contest Id that hasn't been used yet
+        	
+        	
+    		
+    	}//end while
+    	
+    	
+        	
+    	
     	//using the outputstream, you can write your output
     	//based on the mimetype, different encoding may be required
     	//
         ServletOutputStream out = resp.getOutputStream();
 
         out.write("starting a new contest".getBytes());
+        
+        out.write("\ncontest Id ".getBytes());
+        out.write(Integer.toString(contestId).getBytes());
+
         out.flush();
         out.close();
 

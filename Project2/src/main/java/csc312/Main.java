@@ -11,6 +11,7 @@ import org.apache.catalina.startup.Tomcat;
 import csc312.servlet.NewContest;
 import csc312.servlet.Solution;
 import csc312.servlet.TopScores;
+import csc312.servlet.WordFinder;
 import csc312.servlet.Words;
 
 public class Main {
@@ -50,9 +51,13 @@ public class Main {
 	    Context ctx = tomcat.addContext("/", new File(".").getAbsolutePath());
 
 	    Tomcat.addServlet(ctx, "newContest", new NewContest() );
+	    
+	    
 	    Tomcat.addServlet(ctx, "solution", new Solution() );
 		Tomcat.addServlet(ctx, "topScores", new TopScores() );
 		Tomcat.addServlet(ctx, "words", new Words() );
+		Tomcat.addServlet(ctx, "wordfinder", new WordFinder() );
+
 
 	    //1st parameter, is what url are handled by this serlvet, 2nd parameter,
 	    //the name of the servlet handling it
@@ -61,6 +66,8 @@ public class Main {
 	    ctx.addServletMapping("/solution", "solution");
 		ctx.addServletMapping("/words", "words");
 		ctx.addServletMapping("/topScores", "topScores");
+		ctx.addServletMapping("/wordfinder", "wordfinder");
+
 
 	    tomcat.start();
 	    tomcat.getServer().await();

@@ -27,17 +27,77 @@ public class Solution extends HttpServlet {
     	//the browser will react based on the status code such as: to display the content, redirect to the alternate url, display an error page
     	resp.setStatus( HttpServletResponse.SC_OK);
 
-    	//parameter on the URL https://wordfinder-001.appspot.com/wordfinder?game=1&pos=b5
+    	//parameter on the URL http://localhost:8000//solution?contest=41&game=1&solution=zap
     	//returns the value of a parameter on the url
-    	String str = req.getParameter("game");
-
-    	//
+    	String contestId = req.getParameter("contest");
+    	String gameNum=req.getParameter("game");
+    	String solution=req.getParameter("solution");
+    	boolean solved=false;
+    	String wordFound="";
+    	
+    	
     	//using the outputstream, you can write your output
-    	//based on the mimetype, different encoding may be required
-    	//
-        ServletOutputStream out = resp.getOutputStream();
 
-        out.write("this is the solution page".getBytes());
+        ServletOutputStream out = resp.getOutputStream();
+        
+        if(Integer.parseInt(gameNum)==1)
+        {
+           	if(solution.equals("zap"))
+        	{
+        		solved=true;
+        		wordFound="zap";
+        	}
+        }
+        else if(Integer.parseInt(gameNum)==2)
+        {
+        	if(solution.equals("zig"))
+        	{
+        		solved=true;
+        		wordFound="zig";
+
+        	}
+        	
+        }
+        else if(Integer.parseInt(gameNum)==3)
+        {
+        	if(solution.equals("zag"))
+        	{
+        		solved=true;
+        		wordFound="zag";
+
+        	}
+        	
+        }
+        else
+        {
+        	out.write("SC_BAD_REQUEST".getBytes());
+        	
+        }
+
+        out.write("this is the solution page\n\n".getBytes());
+        
+        if(solved==true)
+        {
+        	//game was solved
+        	out.write("You solved puzzle for game ".getBytes());
+        	out.write(gameNum.getBytes());
+        	out.write("\nThe word found was \n".getBytes());
+        	out.write(wordFound.getBytes());
+
+
+
+
+        	
+        }
+        else
+        {
+        	//incorrect solution attempt
+        	out.write("Incorrect solution attempt.".getBytes());
+
+        	
+        	
+        }
+        
         out.flush();
         out.close();
 
